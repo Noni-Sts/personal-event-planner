@@ -32,9 +32,20 @@ export function AppProvider({ children }) {
     setEvents((prev) => [...prev, newEvent]);
   }
 
-  // THIS IS CRUCIAL: return the provider
+  function editEvent(updatedEvent) {
+    setEvents((prev) =>
+      prev.map((event) => (event.id === updatedEvent.id ? updatedEvent : event))
+    );
+  }
+  /*
+  AppProvider is the central context provider for this app.
+  - Holds the main shared state (like the list of events)
+  - Provides functions to update this state (addEvent, editEvent, deleteEvent)
+  - Shares this data and these functions with any component that uses AppContext
+   Make sure to wrap your app with <AppProvider> in App.jsx to enable this shared state.
+*/
   return (
-    <AppContext.Provider value={{ events, deleteEvent, addEvent }}>
+    <AppContext.Provider value={{ events, deleteEvent, addEvent, editEvent }}>
       {children}
     </AppContext.Provider>
   );

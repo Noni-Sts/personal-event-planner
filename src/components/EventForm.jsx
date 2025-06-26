@@ -9,10 +9,12 @@ const initialForm = {
   category: "personal",
 };
 
-export default function EventForm({ onSubmit, initialData = null }) {
+export default function EventForm({ onSubmit, initialData = null, onCancel }) {
+  // Use initialData in edit or start with empty form
   const [formData, setFormData] = useState(initialData || initialForm);
 
   const handleChange = (e) => {
+    // changes in inputs/selects + updates form data state
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -24,7 +26,10 @@ export default function EventForm({ onSubmit, initialData = null }) {
     }
 
     onSubmit(formData);
-    setFormData(initialForm); // Reset after submit
+    // Reset form if adding new event (not editing)
+    if (!initialData) {
+      setFormData(initialForm);
+    }
   };
 
   return (
@@ -105,6 +110,12 @@ export default function EventForm({ onSubmit, initialData = null }) {
       <button type="submit" style={buttonStyle}>
         {initialData ? "Update Event" : "Add Event"}
       </button>
+
+      {initialData && typeof onCancel === "function" && (
+        <button type="button" onClick={onCancel} style={cancelButtonStyle}>
+          Cancel
+        </button>
+      )}
     </form>
   );
 }
@@ -120,6 +131,15 @@ const inputStyle = {
 const buttonStyle = {
   backgroundColor: "#444",
   color: "#fff",
+  border: "none",
+  padding: "0.75rem 1.5rem",
+  borderRadius: "0.5rem",
+  cursor: "pointer",
+};
+
+const cancelButtonStyle = {
+  backgroundColor: "#aaa",
+  color: "#222",
   border: "none",
   padding: "0.75rem 1.5rem",
   borderRadius: "0.5rem",
