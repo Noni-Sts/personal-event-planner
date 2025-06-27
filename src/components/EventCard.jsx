@@ -1,5 +1,5 @@
 import React from "react";
-import getCategoryColor from "../utilities/getCategoryColor"; // coming next!
+import getCategoryColor from "../utilities/getCategoryColor";
 
 export default function EventCard({ event, onEdit, onDelete }) {
   const { bg, text } = getCategoryColor(event.category);

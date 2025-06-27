@@ -24,23 +24,22 @@ export function AppProvider({ children }) {
     },
   ]);
 
-  // add a new event
+  //add new event - user association handling for multi-user behavior
   function addEvent(eventData) {
-    if (!user) return;
+    if (!user) return; // don't add if no user logged in
     const newEvent = {
       ...eventData,
       id: generateId(),
-      owner: user.email, // associate with current user
+      owner: user.email, // link event to logged-in user
     };
     setEvents((prev) => [...prev, newEvent]);
   }
-
-  // edit existing event
+  // edit exisiting event
   function editEvent(updatedEvent) {
     setEvents((prev) =>
       prev.map((event) =>
         event.id === updatedEvent.id
-          ? { ...updatedEvent, owner: event.owner }
+          ? { ...updatedEvent, owner: event.owner } // keep owner intact when editing event
           : event
       )
     );
@@ -50,20 +49,18 @@ export function AppProvider({ children }) {
     setEvents((prev) => prev.filter((event) => event.id !== id));
   }
 
-  function addEvent(eventData) {
-    console.log("Adding event:", eventData);
-    const newEvent = {
-      ...eventData,
-      id: generateId(), // unique ID for the event
-    };
-    setEvents((prev) => [...prev, newEvent]);
+  function loginUser(userData) {
+    setUser(userData); // set the logged-in user object, e.g. { email, name, ... }
   }
 
-  function editEvent(updatedEvent) {
-    setEvents((prev) =>
-      prev.map((event) => (event.id === updatedEvent.id ? updatedEvent : event))
-    );
+  function logoutUser() {
+    setUser(null);
   }
+
+  const userEvents = user
+    ? events.filter((event) => event.owner === user.email)
+    : [];
+
   /*
   AppProvider is the central context provider for this app.
   - Holds the main shared state (like the list of events)
@@ -72,7 +69,18 @@ export function AppProvider({ children }) {
    Make sure to wrap your app with <AppProvider> in App.jsx to enable this shared state.
 */
   return (
-    <AppContext.Provider value={{ events, deleteEvent, addEvent, editEvent }}>
+    <AppContext.Provider
+      value={{
+        events: userEvents, // pass filtered events
+        deleteEvent,
+        addEvent,
+        editEvent,
+        user,
+        setUser,
+        loginUser,
+        logoutUser,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

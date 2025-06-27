@@ -1,7 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
 
 export default function Header() {
+  const { user, logoutUser } = useContext(AppContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logoutUser();
+    navigate("/login"); // redirect to login page after logout
+  };
+
   return (
     <header
       style={{
@@ -58,12 +67,37 @@ export default function Header() {
             marginTop: "0.5rem",
           }}
         >
-          <Link to="/login" style={navLinkStyle}>
-            Login
-          </Link>
-          <Link to="/register" style={navLinkStyle}>
-            Register
-          </Link>
+          {user ? (
+            <>
+              <span style={{ color: "#ccc", alignSelf: "center" }}>
+                Hi, {user.name || user.email}
+              </span>
+              <button
+                onClick={handleLogout}
+                style={{
+                  backgroundColor: "transparent",
+                  border: "1px solid white",
+                  color: "white",
+                  padding: "0.4rem 1rem",
+                  borderRadius: "0.3rem",
+                  cursor: "pointer",
+                }}
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            // conditional (ternary) rendering -> if user exists (logged in) vs // else, show this part (user is null or undefined)
+
+            <>
+              <Link to="/login" style={navLinkStyle}>
+                Login
+              </Link>
+              <Link to="/register" style={navLinkStyle}>
+                Register
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>
