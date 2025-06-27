@@ -7,6 +7,10 @@ function generateId() {
 }
 
 export function AppProvider({ children }) {
+  // user login state
+  const [user, setUser] = useState(null); // null = not logged in
+
+  // events - linked to user by user.email
   const [events, setEvents] = useState([
     {
       id: 1,
@@ -16,8 +20,31 @@ export function AppProvider({ children }) {
       time: "10:00",
       location: "Zoom",
       description: "Discuss project roadmap",
+      owner: "demo@example.com", // ← linked to user
     },
   ]);
+
+  // add a new event
+  function addEvent(eventData) {
+    if (!user) return;
+    const newEvent = {
+      ...eventData,
+      id: generateId(),
+      owner: user.email, // associate with current user
+    };
+    setEvents((prev) => [...prev, newEvent]);
+  }
+
+  // edit existing event
+  function editEvent(updatedEvent) {
+    setEvents((prev) =>
+      prev.map((event) =>
+        event.id === updatedEvent.id
+          ? { ...updatedEvent, owner: event.owner }
+          : event
+      )
+    );
+  }
 
   function deleteEvent(id) {
     setEvents((prev) => prev.filter((event) => event.id !== id));
