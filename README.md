@@ -1,12 +1,24 @@
-# React + Vite
+# Personal Event Planner App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple event planner built using **React**. It allows users to register, log in, and manage their personal events —> like adding, editing, or deleting events. It also includes a Help page with extra guidance.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- Register and log in
+- Create new events
+- Edit and delete events
+- Help page for user guidance
+- Responsive layout (works on desktop and mobile)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## How to Run the App
+
+You can either clone the repo or download the ZIP and install dependencies.
+
+- **Clone the repo** (or download the ZIP):
+  ```bash
+  git clone <https://github.com/Noni-Sts/personal-event-planner.git>
+  ```
