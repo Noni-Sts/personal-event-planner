@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // link react router component
 import { AppContext } from "../context/AppContext";
 
 export default function Header() {

@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { AppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const { loginUser } = useContext(AppContext);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -31,10 +36,23 @@ export default function Register() {
       alert("Please enter a valid email address.");
       return;
     }
+    const newUser = {
+      name,
+      email,
+      username,
+      password,
+    };
 
-    console.log("Registration submitted:", formData);
+    // When the user submits the registration form:
+    // create a newUser object with their details (name, email, username, password).
+    // call loginUser(newUser) to set this user as "logged in" in our app state.
+    // redirect (navigate) to the dashboard page so the user sees their events.
+    // This simulates signing up AND logging in immediately without a real backend.
 
-    // Clear form (optional)
+    loginUser(newUser); // triggers login
+    navigate("/"); // goes to dashboard
+
+    // optionally clear form
     setFormData({
       name: "",
       email: "",
