@@ -20,5 +20,5 @@ You can either clone the repo or download the ZIP and install dependencies.
 
 - **Clone the repo** (or download the ZIP):
   ```bash
-  git clone <https://github.com/Noni-Sts/personal-event-planner.git>
+  git clone https://github.com/Noni-Sts/personal-event-planner.git
   ```
